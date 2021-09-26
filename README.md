@@ -48,4 +48,5 @@ You can find any task, by typing it, or part of it, on the search box on the top
 it will filter the other task out, but dont worry - it wont detele them!
 to see the all tasks again, delete the search box.
 
-
+![alt text](.\solution\resources\KANBAN.JPG)     
+![alt text](.\solution\resources\Capture.JPG)
