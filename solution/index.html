@@ -14,42 +14,31 @@
     </header>
     <input id = "search" placeholder="Search For A Task...">
     <label id = "magnifying-glass" for="search">&#128269;</label>
-  <div id ="Tasks">
-    <section id = "to-do-tasks" class = "task-status">  
-        <label class = "section-label"  for = "to-do-tasks">To DO List</label>
-        <ul id = "to-do-tasks-list" class = "to-do-tasks ultask list">
-            
-            
-            
-        </ul>
-        <input id = "add-to-do-task" class ="inputtask input" placeholder="Add To-Do Task"> 
-        <button id ="submit-add-to-do" class="button-design buttontask">Create a new task</button>
+    <button id = "load-btn">load</button>
+    <button id = "save-btn">save</button>      
+    <div id ="Tasks">
+        <section id = "to-do-tasks" class = "task-status">  
+            <label class = "section-label"  for = "to-do-tasks">To DO List</label>
+            <ul id = "to-do-tasks-list" class = "to-do-tasks ultask list"></ul>
+            <input id = "add-to-do-task" class ="inputtask input" placeholder="Add To-Do Task"> 
+            <button id ="submit-add-to-do" class="button-design buttontask">Create a new task</button>
+        </section>
 
-    </section>
+        <section id ="in-progress-tasks" class = "task-status">
+            <label class = "section-label" for = "in-progress-tasks">In Progress</label>
+            <ul id = "in-progress-tasks-list"  class = "in-progress-tasks ultask list"></ul>
+            <input id = "add-in-progress-task" class ="inputtask input" placeholder="Add In-Progress-Task">
+            <button id ="submit-add-in-progress" class="button-design buttontask">Create a new task</button>
+        </section > 
 
-    <section id ="in-progress-tasks" class = "task-status">
-        <label class = "section-label" for = "in-progress-tasks">In Progress</label>
-        <ul id = "in-progress-tasks-list"  class = "in-progress-tasks ultask list">
+        <section id = "done-tasks" class = "task-status">
+            <label class = "section-label" for = "done-tasks">Done !</label>
+            <ul id = "done-tasks-list" class = "done-tasks ultask list"></ul>
+            <input id = "add-done-task" class ="inputtask input" placeholder="Add Done-Task">
+            <button id ="submit-add-done" class="button-design buttontask">Create a new task</button>
+        </section>  
 
-            
-            
-        </ul>
-        <input id = "add-in-progress-task" class ="inputtask input" placeholder="Add In-Progress-Task">
-        <button id ="submit-add-in-progress" class="button-design buttontask">Create a new task</button>
-
-    </section > 
-
-    <section id = "done-tasks" class = "task-status">
-        <label class = "section-label" for = "done-tasks">Done !</label>
-        <ul id = "done-tasks-list" class = "done-tasks ultask list">
-
-            
-            
-        </ul>
-        <input id = "add-done-task" class ="inputtask input" placeholder="Add Done-Task">
-        <button id ="submit-add-done" class="button-design buttontask">Create a new task</button>
-    </section>  
-  </div>
-  <img id= "img" src="https://quotefancy.com/media/wallpaper/3840x2160/2114384-David-Allen-Quote-Much-of-the-stress-that-people-feel-doesn-t-come.jpg" alt="motivation" width="1000" height="600">
+    </div>
+  <img id= "img" src="./resources/motivation.jpg" alt="motivation" width="1000" height="600">
 </body>
 </html>

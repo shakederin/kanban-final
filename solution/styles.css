@@ -1,5 +1,5 @@
 body{
-    background: url('https://images.unsplash.com/photo-1440688807730-73e4e2169fb8?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1920&h=1282&q=80');
+    background: url("./resources/bodyImage.jpg");
 }
 
 header{
@@ -45,7 +45,7 @@ header{
     width: 30%;
     color: wheat;
     background: linear-gradient(rgb(26, 100, 26), transparent 95%),
-    url("https://i.pinimg.com/originals/79/27/70/792770ae7e555b2c9558961b78b44fff.png");
+    url("./resources/ulImage.png");
 }
 
 .tasksDesign{

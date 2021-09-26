@@ -7,12 +7,7 @@ if (localStorage.getItem("tasks") == null) {                                    
     }));
 }
 else{ 
-    const localStoreTasks = JSON.parse(localStorage.getItem("tasks"));
-    for (let [status, tasks] of Object.entries(localStoreTasks)) {
-        for (let task of tasks){
-            createListElement(mapStatusToUlElement(status), task);
-        }
-    }
+    reloadPage()
 }
 
 // creating the view.
@@ -34,8 +29,80 @@ for (let index = 0 ; index < sectionList.length ; index++){
 }
 const searchInput = document.getElementById("search");
 const searchButton = document.getElementById("magnifying-glass");
+const loadButton = document.getElementById("load-btn");
+const saveButton = document.getElementById("save-btn");
 searchButton.addEventListener("click", searchTask);
 searchInput.addEventListener("input", searchTask);
+loadButton.addEventListener("click", loadDataFromApi);
+saveButton.addEventListener("click", saveDataToApi);
+
+function reloadPage() {
+    const localStoreTasks = JSON.parse(localStorage.getItem("tasks"));
+    for (let [status, tasks] of Object.entries(localStoreTasks)) {
+        for (let task of tasks){
+            createListElement(mapStatusToUlElement(status), task);
+        }
+    }
+}
+
+function clearAllTasks(){
+    const ulElement = document.getElementsByClassName("list");
+    for ( let ul of ulElement){
+        ul.innerHTML = "";
+    }
+}
+
+function addLodingElement(isLoad){
+    const loaderElement = document.createElement("DIV");
+    const loaderElementId = isLoad ? "load-loader" : "save-loader";
+    loaderElement.classList.add("loader");
+    loaderElement.innerText = "Loading...";
+    loaderElement.id = loaderElementId;
+    const addLoaderToElement = isLoad ? loadButton : saveButton;
+    addLoaderToElement.append(loaderElement);
+}
+
+function removeLodingElement(isLoad){
+    const loaderElementId = isLoad ? "load-loader" : "save-loader";
+    const loaderElement = document.getElementById(loaderElementId);
+    loaderElement.remove(); 
+}
+
+async function loadDataFromApi(){
+    addLodingElement(true);
+    const downlodingResponse = await fetch("https://json-bins.herokuapp.com/bin/614b1a584021ac0e6c080cea", {
+        method : "GET"
+    });
+    const response = await downlodingResponse.json();
+    const dataObj =  response.tasks;
+    if (downlodingResponse.status != 200 ){
+        alert ("An error has occured when trying to send the data to the server. error status: "
+            + downlodingResponse.status + " error message: " + downlodingResponse.statusText);
+        return
+    }
+    localStorage.setItem("tasks", JSON.stringify(dataObj));
+    clearAllTasks()
+    reloadPage()
+    removeLodingElement(true);
+}
+
+async function saveDataToApi(){
+    addLodingElement(false);
+    const uploadResponse = await fetch("https://json-bins.herokuapp.com/bin/614b1a584021ac0e6c080cea",{
+        method : "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        body: JSON.stringify({ tasks: JSON.parse(localStorage.getItem("tasks"))})
+    });
+    if (uploadResponse.status != 200 ){
+        alert ("An error has occured when trying to send the data to the server. error status: "
+            + uploadResponse.status + " error message: " + uploadResponse.statusText);
+        return
+    }
+    removeLodingElement(false);
+}
 
 function mapIndexToStatus(index) {
     switch(index){
@@ -67,27 +134,6 @@ function createListElement(list, inputValue) {
         newLi.setAttribute("contenteditable", "false");
     }); 
 
-    newLi.onmousedown = function(event) {                       //drag and drop
-        newLi.style.position = 'absolute';
-        newLi.style.zIndex = 1000;
-        document.body.append(newLi);
-            function moveAt(pageX, pageY) {
-                newLi.style.left = pageX - newLi.offsetWidth / 2 + 'px';
-                newLi.style.top = pageY - newLi.offsetHeight / 2 + 'px';
-            }
-        moveAt(event.pageX, event.pageY);    
-        function onMouseMove(event) {
-            moveAt(event.pageX, event.pageY);
-        }  
-        document.addEventListener('mousemove', onMouseMove);
-        newLi.onmouseup = function() {
-            document.removeEventListener('mousemove', onMouseMove);
-            newLi.onmouseup = null;
-          };
-        
-        };
-        
-
     list.prepend(newLi); 
 
     function whileHoverAndKeyPress(keypressEvent) {
@@ -97,12 +143,6 @@ function createListElement(list, inputValue) {
             if (keyPressed >= 1 && keyPressed<= 3){
                 changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
             };
-            // if (keyPressed == 4){
-            //     changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
-            // };
-            // if (keyPressed == 3){
-            //     changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
-            // } ;
         }                 
     }   
 }
@@ -137,7 +177,7 @@ function searchTask(){
         const ulElement = section.getElementsByClassName("list");
         const taskList = ulElement[0].childNodes;
         const tasksArray = [];
-        for (let i = 0 ; i < taskList.length-1 ; i ++){
+        for (let i = 0 ; i < taskList.length ; i ++){
             const task = taskList[i].innerText;
             const taskToLowerCase = task.toString().toLowerCase();
             tasksArray.push(taskToLowerCase);          
