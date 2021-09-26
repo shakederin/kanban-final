@@ -32,6 +32,10 @@ for (let index = 0 ; index < sectionList.length ; index++){
         inputElement.value = "";
     })
 }
+const searchInput = document.getElementById("search");
+const searchButton = document.getElementById("magnifying-glass");
+searchButton.addEventListener("click", searchTask);
+searchInput.addEventListener("input", searchTask);
 
 function mapIndexToStatus(index) {
     switch(index){
@@ -62,21 +66,43 @@ function createListElement(list, inputValue) {
         updateLocalStorage(inputValue, currentStatus, newLi.innerText);
         newLi.setAttribute("contenteditable", "false");
     }); 
+
+    newLi.onmousedown = function(event) {                       //drag and drop
+        newLi.style.position = 'absolute';
+        newLi.style.zIndex = 1000;
+        document.body.append(newLi);
+            function moveAt(pageX, pageY) {
+                newLi.style.left = pageX - newLi.offsetWidth / 2 + 'px';
+                newLi.style.top = pageY - newLi.offsetHeight / 2 + 'px';
+            }
+        moveAt(event.pageX, event.pageY);    
+        function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+        }  
+        document.addEventListener('mousemove', onMouseMove);
+        newLi.onmouseup = function() {
+            document.removeEventListener('mousemove', onMouseMove);
+            newLi.onmouseup = null;
+          };
+        
+        };
+        
+
     list.prepend(newLi); 
-    
+
     function whileHoverAndKeyPress(keypressEvent) {
         if (keypressEvent.altKey){
             const keyPressed = keypressEvent.key;
             const currentStatus = getCurrentStatus(ulElementsList, newLi.parentNode);
-            if (keyPressed == 1){
+            if (keyPressed >= 1 && keyPressed<= 3){
                 changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
             };
-            if (keyPressed == 2){
-                changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
-            };
-            if (keyPressed == 3){
-                changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
-            } ;
+            // if (keyPressed == 4){
+            //     changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
+            // };
+            // if (keyPressed == 3){
+            //     changeTaskStatusWithAlt(newLi, newLi.parentNode, currentStatus, newLi.innerText, keyPressed, ulElementsList);
+            // } ;
         }                 
     }   
 }
@@ -102,7 +128,24 @@ function mapStatusToUlElement(status) {
 }
 
 function searchTask(){
-    
+    const allTask  = document.getElementsByTagName("LI");
+    for ( let task of allTask){
+        task.hidden = false;
+    } 
+    for (let index = 0 ; index < sectionList.length ; index++){
+        const section = sectionList[index];
+        const ulElement = section.getElementsByClassName("list");
+        const taskList = ulElement[0].childNodes;
+        const tasksArray = [];
+        for (let i = 0 ; i < taskList.length-1 ; i ++){
+            const task = taskList[i].innerText;
+            const taskToLowerCase = task.toString().toLowerCase();
+            tasksArray.push(taskToLowerCase);          
+            if (taskToLowerCase.indexOf(searchInput.value) === -1 ){
+                taskList[i].hidden = true;
+            }
+        } 
+    }
 }
 
 // Local storage actions

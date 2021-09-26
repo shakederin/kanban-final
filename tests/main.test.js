@@ -151,7 +151,7 @@ describe(projectName, () => {
   })
 
   afterAll(async () => {
-    await browser.close()
+    //await browser.close()
   })
 
   test('Page title should be defined', async () => {
