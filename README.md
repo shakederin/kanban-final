@@ -48,5 +48,17 @@ You can find any task, by typing it, or part of it, on the search box on the top
 it will filter the other task out, but dont worry - it wont detele them!
 to see the all tasks again, delete the search box.
 
-![alt text](.\solution\resources\KANBAN.JPG)     
-![alt text](.\solution\resources\Capture.JPG)
+
+## If I'll Have More Time I Would Add:
+
+1. Time and date on each mission creation.
+2. Scale from 1 to 10 of the importance of the mission - change the color.
+3. Delete button to each task.
+4. sort button - by: date/importance/name.
+5. (change) the appearance of the 'Loding...' time
+
+hope this tool will change your live for the best!
+
+
+(.\solution\resources\KANBAN.JPG)     
+(.\solution\resources\Capture.JPG)
