@@ -60,5 +60,5 @@ to see the all tasks again, delete the search box.
 hope this tool will change your live for the best!
 
 
-(.\solution\resources\KANBAN.JPG)     
+KANBAN (https://github.com/shakederin/kanban-final/blob/Create-Kanban/solution/resources/KANBAN.JPG)    
 (.\solution\resources\Capture.JPG)
