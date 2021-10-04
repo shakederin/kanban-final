@@ -3,7 +3,7 @@
 
 ## What Is The Project About? 
 welcome to my project!
-I made a [KANBAN](https://github.com/shakederin/kanban-final/tree/Create-Kanban).
+I made a [KANBAN](https://shakederin.github.io/kanban-final/solution/).
 
 KANBAN is a tool that helps organize tasks.
 
